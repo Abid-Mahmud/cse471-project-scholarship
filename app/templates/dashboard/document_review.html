@@ -1,0 +1,405 @@
+{% extends "base.html" %}
+
+{% block title %}Document Tools | ScholarMatch{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-[#0B1120] text-slate-100 flex flex-col relative overflow-hidden">
+    <!-- Animated Background Glow (Matching Dashboard) -->
+    <div
+        class="absolute top-0 right-0 -mr-20 -mt-20 w-[40rem] h-[40rem] bg-purple-500/10 rounded-full blur-[100px] animate-pulse">
+    </div>
+
+    <!-- Header Navigation -->
+    <div class="border-b border-white/5 bg-white/5 backdrop-blur-xl sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center gap-4">
+            <a href="{{ url_for('dashboard') }}"
+                class="p-2 bg-slate-900/50 border border-slate-700/50 rounded-lg hover:border-purple-500/50 transition-colors text-slate-400 hover:text-white">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </a>
+            <div>
+                <h1 class="text-xl font-bold text-white flex items-center gap-2">
+                    <span class="text-purple-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                    </span>
+                    Document Review Studio
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="max-w-7xl mx-auto w-full flex-grow p-6 lg:p-8 flex flex-col lg:flex-row gap-8 relative z-10">
+
+        <!-- ==================== LEFT SIDEBAR (MODULE 2 HUB) ==================== -->
+        <aside class="w-full lg:w-1/4 flex-shrink-0">
+            <div class="bg-slate-900/60 border border-slate-800 rounded-3xl p-4 sticky top-28 backdrop-blur-xl">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 px-3">Application Tools</h3>
+
+                <nav class="space-y-1">
+                    <!-- 1. AI Document Checklist (ACTIVE) -->
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-3 rounded-xl bg-purple-500/10 text-purple-400 font-semibold border border-purple-500/20">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+                            </path>
+                        </svg>
+                        AI Document Checklist
+                    </a>
+
+                    <!-- 2. SOP Generator (INACTIVE) -->
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                            </path>
+                        </svg>
+                        SOP Generator
+                    </a>
+
+                    <!-- 3. AI Resume/CV Analyzer (INACTIVE) -->
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2">
+                            </path>
+                        </svg>
+                        Resume Analyzer
+                    </a>
+
+                    <!-- 4. AI Essay Review (INACTIVE) -->
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        AI Essay Review
+                    </a>
+
+                    <!-- 5. Missing Requirement Analyzer (INACTIVE) -->
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                        </svg>
+                        Missing Requirements
+                    </a>
+
+                    <!-- 6. AI Cost Calculator (INACTIVE) -->
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                        Scholarship Cost Calculator
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- ==================== RIGHT CONTENT (ACTIVE FEATURE TOOL) ==================== -->
+        <main class="w-full lg:w-3/4">
+
+            <!-- Description Banner -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white mb-2">AI Document Checklist</h2>
+                <p class="text-slate-400">Generate and track personalized document requirements for any verified
+                    university worldwide.</p>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+                <!-- Generator Form -->
+                <div class="xl:col-span-5">
+                    <div class="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-xl">
+                        <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="text-amber-400">⚡</span> Generate New Checklist
+                        </h2>
+                        <form action="{{ url_for('student.generate_checklist') }}" method="POST" class="space-y-4">
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">University
+                                    Name</label>
+                                <input type="text" name="university" placeholder="e.g. Harvard University" required
+                                    class="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-sm">
+                            </div>
+
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Country
+                                    Location</label>
+                                <input type="text" name="country" placeholder="e.g. United States" required
+                                    class="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-sm">
+                            </div>
+
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Target
+                                    Degree</label>
+                                <select name="degree_level" required
+                                    class="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-sm appearance-none cursor-pointer">
+                                    <option value="Masters Program">Masters Program</option>
+                                    <option value="PhD Program">PhD Program</option>
+                                    <option value="Undergraduate Program">Undergraduate Program</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Field
+                                    / Major</label>
+                                <input type="text" name="major" placeholder="e.g. Computer Science" required
+                                    class="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all text-sm">
+                            </div>
+
+                            <button type="submit"
+                                class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-purple-600/25 flex items-center justify-center gap-2 text-sm mt-4 cursor-pointer">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                                Verify & Generate Checklist
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Saved Checklists -->
+                <div class="xl:col-span-7 space-y-6">
+                    {% if not checklists %}
+                    <div
+                        class="bg-slate-900/40 border border-slate-800/60 rounded-3xl p-12 text-center h-full flex flex-col justify-center">
+                        <div
+                            class="w-16 h-16 bg-slate-800/50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-700/50 text-slate-400">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-1">No Checklists Created Yet</h3>
+                        <p class="text-slate-400 text-sm max-w-md mx-auto">Use the form on the left to enter a
+                            university name, country, and major. AI will automatically verify the institution and
+                            generate a tailored checklist for you!</p>
+                    </div>
+                    {% else %}
+                    {% for chk in checklists %}
+                    {% set completed_count = chk.items | selectattr('is_completed') | list | length %}
+                    {% set total_count = chk.items | length %}
+                    {% set progress_pct = (completed_count / total_count * 100) | round if total_count > 0 else 0 %}
+
+                    <div
+                        class="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-xl transition-all hover:border-slate-700">
+                        <!-- Card Header -->
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span
+                                        class="px-2.5 py-0.5 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold rounded-full">
+                                        {{ chk.degree_level }}
+                                    </span>
+                                    <span class="text-xs text-slate-400">• {{ chk.major }}</span>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">{{ chk.university }} <span
+                                        class="text-slate-400 font-normal">({{ chk.country }})</span></h3>
+                            </div>
+
+                            <form action="{{ url_for('student.delete_checklist', checklist_id=chk.id) }}" method="POST"
+                                onsubmit="return confirm('Delete this checklist?');">
+                                <button type="submit"
+                                    class="p-2 text-slate-500 hover:text-rose-400 transition-colors bg-slate-950 rounded-xl"
+                                    title="Delete Checklist">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="mb-6">
+                            <div class="flex justify-between text-xs font-medium mb-2">
+                                <span class="text-slate-400">Application Progress</span>
+                                <span
+                                    class="{% if progress_pct == 100 %}text-emerald-400{% else %}text-purple-400{% endif %} font-bold"
+                                    id="progress-text-{{ chk.id }}">
+                                    {{ completed_count }} of {{ total_count }} Completed ({{ progress_pct | int }}%)
+                                </span>
+                            </div>
+                            <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-800">
+                                <div id="progress-bar-{{ chk.id }}"
+                                    class="{% if progress_pct == 100 %}bg-emerald-500{% else %}bg-gradient-to-r from-purple-500 to-pink-500{% endif %} h-2.5 rounded-full transition-all duration-500"
+                                    style="width: {{ progress_pct }}%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Document Items Checklist -->
+                        <div class="space-y-3" data-checklist-id="{{ chk.id }}" data-total-items="{{ total_count }}">
+                            {% for item in chk.items %}
+                            <button type="button" onclick="toggleItem(this, '{{ chk.id }}', {{ loop.index0 }})"
+                                class="w-full text-left p-3.5 rounded-xl border transition-all flex items-start gap-3 cursor-pointer 
+                                            {% if item.is_completed %}bg-emerald-950/20 border-emerald-500/30 text-slate-300{% else %}bg-slate-950/40 border-slate-800/80 hover:border-purple-500/30 text-slate-200{% endif %}"
+                                data-completed="{{ 'true' if item.is_completed else 'false' }}">
+
+                                <div class="mt-0.5 flex-shrink-0">
+                                    <div
+                                        class="checkbox-box w-5 h-5 rounded-md border flex items-center justify-center transition-colors 
+                                                    {% if item.is_completed %}bg-emerald-500 border-emerald-500 text-slate-950{% else %}border-slate-600 bg-slate-900{% endif %}">
+
+                                        <svg class="checkmark-icon w-3.5 h-3.5 font-bold {% if not item.is_completed %}hidden{% endif %}"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                                d="M5 13l4 4L19 7"></path>
+                                        </svg>
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div
+                                        class="item-name text-sm font-semibold {% if item.is_completed %}line-through text-slate-400{% else %}text-white{% endif %}">
+                                        {{ item.name }}
+                                    </div>
+                                    {% if item.description %}
+                                    <div class="text-xs text-slate-400 mt-0.5 leading-relaxed">
+                                        {{ item.description }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<script>
+    async function toggleItem(buttonElement, checklistId, itemIdx) {
+        if (buttonElement.disabled) return;
+
+        // 1. INSTANT UI UPDATE (Optimistic Update)
+        const isCompleted = buttonElement.getAttribute('data-completed') === 'true';
+        const newState = !isCompleted;
+
+        // Disable button temporarily to prevent spam clicking
+        buttonElement.disabled = true;
+
+        // Function to apply styles so we can use it instantly, and use it to revert if there's an error
+        function applyVisualState(state) {
+            buttonElement.setAttribute('data-completed', state);
+            const checkboxBox = buttonElement.querySelector('.checkbox-box');
+            const checkmarkIcon = buttonElement.querySelector('.checkmark-icon');
+            const itemName = buttonElement.querySelector('.item-name');
+
+            if (state) {
+                buttonElement.classList.replace('bg-slate-950/40', 'bg-emerald-950/20');
+                buttonElement.classList.replace('border-slate-800/80', 'border-emerald-500/30');
+                buttonElement.classList.replace('text-slate-200', 'text-slate-300');
+                buttonElement.classList.remove('hover:border-purple-500/30');
+
+                checkboxBox.classList.replace('border-slate-600', 'bg-emerald-500');
+                checkboxBox.classList.replace('bg-slate-900', 'border-emerald-500');
+                checkboxBox.classList.add('text-slate-950');
+
+                checkmarkIcon.classList.remove('hidden');
+                itemName.classList.add('line-through', 'text-slate-400');
+                itemName.classList.remove('text-white');
+            } else {
+                buttonElement.classList.replace('bg-emerald-950/20', 'bg-slate-950/40');
+                buttonElement.classList.replace('border-emerald-500/30', 'border-slate-800/80');
+                buttonElement.classList.replace('text-slate-300', 'text-slate-200');
+                buttonElement.classList.add('hover:border-purple-500/30');
+
+                checkboxBox.classList.replace('bg-emerald-500', 'border-slate-600');
+                checkboxBox.classList.replace('border-emerald-500', 'bg-slate-900');
+                checkboxBox.classList.remove('text-slate-950');
+
+                checkmarkIcon.classList.add('hidden');
+                itemName.classList.remove('line-through', 'text-slate-400');
+                itemName.classList.add('text-white');
+            }
+
+            // Instantly update the progress bar too
+            updateProgressBar(checklistId);
+        }
+
+        // Apply the new visual state immediately without waiting for the server
+        applyVisualState(newState);
+
+        // 2. BACKGROUND SERVER SYNC
+        try {
+            const response = await fetch(`/student/toggle_checklist_item/${checklistId}/${itemIdx}`, {
+                method: 'POST'
+            });
+
+            // If the server fails, revert the visual change
+            if (!response.ok) {
+                console.error('Failed to update on server. Reverting...');
+                applyVisualState(isCompleted);
+            }
+        } catch (error) {
+            // If the network fails, revert the visual change
+            console.error('Network Error:', error);
+            applyVisualState(isCompleted);
+        } finally {
+            // Re-enable the button
+            buttonElement.disabled = false;
+        }
+    }
+
+    function updateProgressBar(checklistId) {
+        const container = document.querySelector(`[data-checklist-id="${checklistId}"]`);
+        const totalItems = parseInt(container.getAttribute('data-total-items'));
+
+        // Count how many buttons in this specific checklist have data-completed="true"
+        const completedButtons = container.querySelectorAll('button[data-completed="true"]');
+        const completedCount = completedButtons.length;
+
+        let progressPct = 0;
+        if (totalItems > 0) {
+            progressPct = Math.round((completedCount / totalItems) * 100);
+        }
+
+        const progressText = document.getElementById(`progress-text-${checklistId}`);
+        const progressBar = document.getElementById(`progress-bar-${checklistId}`);
+
+        // Update Text
+        progressText.innerText = `${completedCount} of ${totalItems} Completed (${progressPct}%)`;
+
+        // Update Progress Bar Width
+        progressBar.style.width = `${progressPct}%`;
+
+        // Update Colors if 100%
+        if (progressPct === 100) {
+            progressText.classList.replace('text-purple-400', 'text-emerald-400');
+            progressBar.classList.replace('bg-gradient-to-r', 'bg-emerald-500');
+            progressBar.classList.remove('from-purple-500', 'to-pink-500');
+        } else {
+            progressText.classList.replace('text-emerald-400', 'text-purple-400');
+            progressBar.classList.add('bg-gradient-to-r', 'from-purple-500', 'to-pink-500');
+            progressBar.classList.remove('bg-emerald-500');
+        }
+    }
+</script>
+{% endblock %}
