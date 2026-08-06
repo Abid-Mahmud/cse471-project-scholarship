@@ -1,0 +1,85 @@
+import random, datetime, smtplib, os
+from email.mime.text import MIMEText
+from flask import render_template, request, flash, redirect, url_for, session
+from flask_login import login_user, logout_user, login_required, current_user
+from app.routes.admin import admin_bp
+from app.models.admin import Admin
+from app.extensions import bcrypt
+
+def send_otp_email(to_email, otp_code):
+    sender_email = os.environ.get('MAIL_USERNAME')
+    sender_password = os.environ.get('MAIL_PASSWORD')
+    if not sender_email or not sender_password:
+        print(f"\n[DEV MODE OTP] Admin Code for {to_email}: {otp_code}\n")
+        return True
+    try:
+        msg = MIMEText(f"Your ScholarMatch Admin OTP is: {otp_code}\nExpires in 2 minutes.")
+        msg['Subject'] = 'ScholarMatch Security: Admin Login OTP'
+        msg['From'] = sender_email
+        msg['To'] = to_email
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, to_email, msg.as_string())
+        return True
+    except Exception as e:
+        print(f"Failed to send OTP email: {e}")
+        return False
+
+@admin_bp.route('/login', methods=['GET', 'POST'])
+def admin_login():
+    if current_user.is_authenticated and getattr(current_user, 'role', '') == 'admin':
+        return redirect(url_for('admin.admin_dashboard'))
+
+    if request.method == 'POST':
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password')
+        admin = Admin.objects(email=email).first()
+
+        if admin and bcrypt.check_password_hash(admin.password, password):
+            otp = str(random.randint(100000, 999999))
+            admin.otp_code = otp
+            admin.otp_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
+            admin.save()
+
+            session['pending_admin_id'] = str(admin.id)
+            send_otp_email(admin.email, otp)
+            flash('Verification code sent to your email.', 'info')
+            return redirect(url_for('admin.verify_otp'))
+        else:
+            flash('Invalid Admin Credentials.', 'error')
+
+    return render_template('auth/admin_login.html')
+
+@admin_bp.route('/verify-otp', methods=['GET', 'POST'])
+def verify_otp():
+    admin_id = session.get('pending_admin_id')
+    if not admin_id:
+        return redirect(url_for('admin.admin_login'))
+
+    if request.method == 'POST':
+        entered_otp = request.form.get('otp', '').strip()
+        admin = Admin.objects(id=admin_id).first()
+
+        if admin and admin.otp_code == entered_otp:
+            if admin.otp_expiry and datetime.datetime.utcnow() <= admin.otp_expiry:
+                admin.otp_code = None
+                admin.otp_expiry = None
+                admin.save()
+                session.pop('pending_admin_id', None)
+                login_user(admin)
+                flash('Secure Admin Login Successful!', 'success')
+                return redirect(url_for('admin.admin_dashboard'))
+            else:
+                flash('OTP has expired. Please log in again.', 'error')
+                return redirect(url_for('admin.admin_login'))
+        else:
+            flash('Invalid verification code.', 'error')
+
+    return render_template('auth/admin_verify_otp.html')
+
+@admin_bp.route('/logout')
+@login_required
+def admin_logout():
+    if getattr(current_user, 'role', '') == 'admin':
+        logout_user()
+    return redirect(url_for('admin.admin_login'))

@@ -1,0 +1,11 @@
+Flask==3.0.3
+Flask-Login==0.6.3
+Flask-MongoEngine==1.0.0
+flask-bcrypt==1.0.1
+python-dotenv==1.0.1
+requests==2.32.3
+google-auth==2.30.0
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+pymongo==4.7.2
+email-validator==2.1.1
